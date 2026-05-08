@@ -30,7 +30,7 @@ jobs:
       - name: Execute automation script
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          PROJECT_NAME: ${{ github.event.inputs.project }}
+          PROJECT_NAME: ${{ github.event.inputs.project || 'juice-shop' }}
         run: |
           python automation/sonarcloud_automation.py
 
