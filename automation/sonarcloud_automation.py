@@ -12,6 +12,8 @@ ORGANIZATION = "pipeline-jenkins"
 
 SONARCLOUD_URL = "https://sonarcloud.io"
 
+PROJECT_NAME = "juice-shop"
+
 # =====================================
 # DETECTAR LENGUAJE
 # =====================================
