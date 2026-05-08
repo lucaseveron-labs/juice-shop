@@ -114,8 +114,8 @@ sonar.host.url=https://sonarcloud.io
 def main():
 
     # Nombre lógico del proyecto
-    PROJECT_NAME: ${{ github.event.inputs.project || 'juice-shop' }}
-
+    project_name = os.getenv("PROJECT_NAME")
+    
     if not project_name:
 
         print("[!] PROJECT_NAME no definido")
