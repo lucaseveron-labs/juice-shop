@@ -113,7 +113,7 @@ sonar.host.url=https://sonarcloud.io
 
 def main():
 
-    # Nombre del proyecto recibido desde GitHub Actions
+    # Nombre lógico del proyecto
     project_name = os.getenv("PROJECT_NAME")
 
     if not project_name:
@@ -121,15 +121,15 @@ def main():
         print("[!] PROJECT_NAME no definido")
         return
 
-    # Carpeta del proyecto vulnerable
-    project_path = f"./{project_name}"
+    # El repo entero es el proyecto vulnerable
+    project_path = "."
 
     if not os.path.exists(project_path):
 
-        print(f"[!] Proyecto no encontrado: {project_path}")
+        print("[!] Proyecto no encontrado")
         return
 
-    # Key dinámica para SonarCloud
+    # Key dinámica SonarCloud
     project_key = (
         f"pipeline-jenkins_{project_name}"
         .replace(" ", "-")
