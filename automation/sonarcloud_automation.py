@@ -34,12 +34,15 @@ def detect_language(project_path):
     counter = {}
 
     for root, _, files in os.walk(project_path):
+
         for file in files:
 
             ext = Path(file).suffix
 
             if ext in extensions:
+
                 lang = extensions[ext]
+
                 counter[lang] = counter.get(lang, 0) + 1
 
     if not counter:
@@ -68,13 +71,16 @@ def create_project(project_key, project_name):
     )
 
     if response.status_code == 200:
+
         print(f"[+] Proyecto creado: {project_name}")
 
     elif "already exists" in response.text.lower():
+
         print(f"[!] El proyecto ya existe: {project_name}")
 
     else:
-        print(f"[!] Error creando proyecto:")
+
+        print("[!] Error creando proyecto:")
         print(response.text)
 
 # =====================================
@@ -107,18 +113,32 @@ sonar.host.url=https://sonarcloud.io
 
 def main():
 
-    # Carpeta del código a analizar
-    project_path = "."
+    # Nombre del proyecto recibido desde GitHub Actions
+    project_name = os.getenv("PROJECT_NAME")
 
-    if not os.path.exists(project_path):
-        print("[!] Proyecto no encontrado")
+    if not project_name:
+
+        print("[!] PROJECT_NAME no definido")
         return
 
-    
+    # Carpeta del proyecto vulnerable
+    project_path = f"./{project_name}"
 
-    project_key = f"juice-shop{project_name}".replace(" ", "-")
+    if not os.path.exists(project_path):
+
+        print(f"[!] Proyecto no encontrado: {project_path}")
+        return
+
+    # Key dinámica para SonarCloud
+    project_key = (
+        f"pipeline-jenkins_{project_name}"
+        .replace(" ", "-")
+        .lower()
+    )
 
     language = detect_language(project_path)
+
+    print(f"[+] Proyecto: {project_name}")
 
     print(f"[+] Lenguaje detectado: {language}")
 
@@ -131,6 +151,7 @@ def main():
     )
 
     print("\n[+] Configuración finalizada")
+
     print(
         f"https://sonarcloud.io/project/overview?id={project_key}"
     )
