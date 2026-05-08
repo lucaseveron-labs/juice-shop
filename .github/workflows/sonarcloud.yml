@@ -1,4 +1,4 @@
-name: SonarCloud Automation 
+name: SonarCloud Automation
 
 on:
   push:
@@ -6,6 +6,11 @@ on:
       - master
 
   workflow_dispatch:
+    inputs:
+      project:
+        description: "Proyecto a analizar"
+        required: true
+        default: "juice-shop"
 
 jobs:
   sonarcloud:
@@ -25,11 +30,12 @@ jobs:
 
       - name: Install Python dependencies
         run: |
-            pip install requests
+          pip install requests
 
       - name: Execute automation script
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          PROJECT_NAME: ${{ github.event.inputs.project }}
         run: |
           python automation/sonarcloud_automation.py
 
@@ -37,3 +43,5 @@ jobs:
         uses: SonarSource/sonarqube-scan-action@v6
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: ${{ github.event.inputs.project }}
