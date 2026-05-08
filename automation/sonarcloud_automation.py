@@ -114,7 +114,7 @@ def main():
         print("[!] Proyecto no encontrado")
         return
 
-    project_name = os.path.basename(project_path)
+    
 
     project_key = f"juice-shop{project_name}".replace(" ", "-")
 
