@@ -12,8 +12,6 @@ ORGANIZATION = "pipeline-jenkins"
 
 SONARCLOUD_URL = "https://sonarcloud.io"
 
-PROJECT_NAME = "juice-shop"
-
 # =====================================
 # DETECTAR LENGUAJE
 # =====================================
@@ -116,7 +114,7 @@ sonar.host.url=https://sonarcloud.io
 def main():
 
     # Nombre lógico del proyecto
-    project_name = os.getenv("PROJECT_NAME")
+    PROJECT_NAME: ${{ github.event.inputs.project || 'juice-shop' }}
 
     if not project_name:
 
